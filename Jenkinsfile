@@ -18,12 +18,8 @@ pipeline {
     options {
         //Disable concurrentbuilds for the same job
         disableConcurrentBuilds()
-        // Discard previos builds
-        buildDiscarder(logRotator(numToKeepStr: env.BRANCH_NAME.equals(RELEASE_BRANCH_NAME) ? '5' : '2')) 
-
         // Colorize the console log
-        ansiColor("xterm")       
-       
+        ansiColor("xterm")          
         // Add timestamps to console log
         timestamps()
         
@@ -43,9 +39,10 @@ pipeline {
       }
     }
 
-    stage('Stage 2') {
+    stage('Build Lamba') {
       steps {
         script {
+          bat mvn clean install
           echo 'Stage 2'
         }
       }
