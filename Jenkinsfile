@@ -32,9 +32,9 @@ pipeline {
       steps {
         script {
             // Make sure we're in a clean space
-           deleteDir()
+          // deleteDir()
            // Check out revision that was used to fetch the Jenkinsfile running the pipeline
-           checkout scm
+          // checkout scm
           //  echo "PATH = ${PATH}"
           echo 'Stage 1'
         }
@@ -44,7 +44,8 @@ pipeline {
     stage('Build Lamba') {
       steps {
         script {
-          bat 'mvn clean install'
+         // bat 'mvn clean install'
+            bat 'aws s3 ls'
          
           echo 'Stage 2'
         }
