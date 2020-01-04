@@ -15,7 +15,12 @@ pipeline {
         jdk 'JAVA_HOME'
         maven 'MAVEN_HOME'
     }
-        
+    
+    environment {      
+      http_proxy = 'proxy2.wipro.com:8080'
+      https_proxy = 'proxy2.wipro.com:8080'
+    }
+
     
     options {
         //Disable concurrentbuilds for the same job
@@ -24,15 +29,17 @@ pipeline {
         buildDiscarder(logRotator(numToKeepStr: env.BRANCH_NAME.equals(RELEASE_BRANCH_NAME) ? '5' : '2')) 
 
         // Colorize the console log
-        ansiColor("xterm")        
-      
+        ansiColor("xterm")
         
+        // Tell GitLab about the build stages we're about to run
+        gitLabConnection('AN366419_WiproGitlab')
+        gitlabBuilds(builds: ['SCM Checkout', 'Maven Build'])
         // Add timestamps to console log
         timestamps()
         
     }
     triggers {
-            github(
+            gitlab(
                 triggerOnPush: true,
                 triggerOnMergeRequest: true,
                 branchFilterType: 'All',
@@ -42,13 +49,15 @@ pipeline {
     stages {
         stage('SCM Checkout') {
             steps {
-                githubCommitStatus(name: 'SCM Checkout') {
+                gitlabCommitStatus(name: 'SCM Checkout') {
                     // Run groovy script
                     script {
                         // Make sure we're in a clean space
                      	deleteDir()
                         // Check out revision that was used to fetch the Jenkinsfile running the pipeline
-                        scm
+                        //checkout scm
+                        git credentialsId: 'AN366419_WiproGitlab', url: 'https://topgear-training-gitlab.wipro.com/AN366419/DevOpsProfessional_Batch6_Capstone_OnlineAddressBook.git'
+                        
                      }
                  } 
              }
@@ -70,11 +79,117 @@ pipeline {
              }
           }
           
-         
-                    
-         
+          stage('Analysis Code Quality') {
+            steps {
+                    // Run groovy script
+                    script {
+                    	withSonarQubeEnv('SonarQube_AN366419') { 
+                            sh "mvn test sonar:sonar"
+                        }
+                       
+                     }
+             
+             }
+          }
           
-         
+          
+          
+          stage('Integration Tests') {
+            steps {
+                    // Run groovy script
+                    script {
+                    	withMaven() {
+                            sh "mvn install"
+                        }
+                       
+                     }
+             
+             }
+          }
+          
+          stage('Artifacts Upload') {
+            steps {
+                    // Run groovy script
+                    script {
+                    	def server = Artifactory.server "AN366419_Artifactory"
+                        def buildInfo = Artifactory.newBuildInfo()
+                        buildInfo.env.capture = true
+                        buildInfo.env.collect()
+
+                        def uploadSpec = """{
+                        "files": [
+                            {
+                            "pattern": "${pwd()}/target/*.jar",
+                            "target": "libs-snapshot-local"
+                          }, {
+                            "pattern": "${pwd()}/target/*.pom",
+                            "target": "libs-snapshot-local"
+                          }, {
+                            "pattern": "${pwd()}/target/*.war",
+                            "target": "libs-snapshot-local"
+                          }
+                        ]
+                      }"""
+                      // Upload to Artifactory.
+                      server.upload(uploadSpec)
+                      //server.upload spec: uploadSpec, buildInfo: buildInfo
+                
+                      buildInfo.retention maxBuilds: 10, maxDays: 7, deleteBuildArtifacts: true
+                      // Publish build info.
+                      server.publishBuildInfo buildInfo
+                       
+                     }
+                             
+             
+             }
+          }
+          
+          stage('Dev Test Environment') {
+            steps {
+                    // Run groovy script
+                    script {
+                    	ansiColor('xterm') {
+                        ansiblePlaybook(
+                        playbook: '/home/osgdev/ansilab/roles/AN366419_Tomcat_Deploy/AN366419_Tomcat_Deploy.yml',
+                        inventory: '/home/osgdev/ansilab/ansiserver',
+                        credentialsId: 'Ansible_Login_Key',
+                        extras : "-e ansible_sudo_pass=osg@1234",
+                            colorized: true)
+                    	}	
+                       
+                     }
+                            
+             
+             }
+          }
+          // Only want to deploy from master branch,
+          stage('Production Release') {
+           
+            steps {
+               
+                    // Run groovy script
+                    script {
+                        // Randomly Proxy authentication 
+                    	//withDockerRegistry([ credentialsId: "DockerHubCredentials", url: "" ]) {
+                            //clear existing docker build image
+                            sh 'docker container stop addreddbook'
+                            sh 'docker container rm addreddbook'
+                            sh 'docker image rmi -f onlineaddressbook:1.0'
+                            //docker build image
+                            sh 'docker build -t onlineaddressbook:1.0 .'
+                            // following commands will be executed within logged docker registry
+                            //sh 'docker push onlineaddressbook:1.0'
+                            
+                            
+                            sh 'docker run -d --name  addreddbook -p8081:8080 onlineaddressbook:1.0' 
+                       // }
+                       
+                    
+                 }              
+             
+             }
+          }
+          
           
       }
       
