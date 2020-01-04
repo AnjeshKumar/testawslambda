@@ -11,8 +11,8 @@ pipeline {
    
     //Default tools for agent
     tools {
-        JDK "JAVA_HOME"
-        Maven "MAVEN_HOME"
+        JDK 'JAVA_HOME'
+        Maven 'MAVEN_HOME'
        
     }
     
