@@ -11,8 +11,10 @@ pipeline {
    
     //Default tools for agent
     tools {
-        jdk 'JAVA_HOME'
-        maven 'MAVEN_HOME'
+        //jdk 'JAVA_HOME'
+        //maven 'MAVEN_HOME'
+        maven 'Maven 3.3.9' 
+        jdk 'jdk8
     }
     
     options {
@@ -31,9 +33,9 @@ pipeline {
       steps {
         script {
             // Make sure we're in a clean space
-           deleteDir()
+          // deleteDir()
            // Check out revision that was used to fetch the Jenkinsfile running the pipeline
-           checkout scm
+          // checkout scm
           echo 'Stage 1'
         }
       }
