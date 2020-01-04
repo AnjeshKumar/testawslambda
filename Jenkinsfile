@@ -42,8 +42,7 @@ pipeline {
     stage('Build Lamba') {
       steps {
         script {
-          maven() {
-               bat "mvn clean compile"
+          bat java -version
           }
           echo 'Stage 2'
         }
