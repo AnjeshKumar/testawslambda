@@ -1,5 +1,20 @@
+// Variables defined 
+
+def RELEASE_BRANCH_NAME = "master"
+def emailNotifications = 'anjesh.kumar@wipro.com'
+def notificationSent    = false
+def workspace = env.WORKSPACE
+
 pipeline {
-  agent any
+    //Default agent label to run all stages
+    agent { label 'master'}
+   
+    //Default tools for agent
+    tools {
+        jdk 'JAVA_HOME'
+        maven 'MAVEN_HOME'
+    }
+  
   stages {
 
     stage('Stage 1') {
