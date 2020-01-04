@@ -35,6 +35,7 @@ pipeline {
           // deleteDir()
            // Check out revision that was used to fetch the Jenkinsfile running the pipeline
           // checkout scm
+            echo "PATH = ${PATH}"
           echo 'Stage 1'
         }
       }
