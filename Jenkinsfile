@@ -11,8 +11,8 @@ pipeline {
    
     //Default tools for agent
     tools {
-        jdk "JAVA_HOME"
-        maven "MAVEN_HOME"
+        JDK "JAVA_HOME"
+        Maven "MAVEN_HOME"
        
     }
     
@@ -43,7 +43,7 @@ pipeline {
     stage('Build Lamba') {
       steps {
         script {
-          bat java -version
+          bat 'java -version'
          
           echo 'Stage 2'
         }
