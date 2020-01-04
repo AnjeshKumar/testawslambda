@@ -16,7 +16,6 @@ pipeline {
         maven 'MAVEN_HOME'
     }
         
-
     
     options {
         //Disable concurrentbuilds for the same job
