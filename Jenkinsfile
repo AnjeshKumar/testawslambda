@@ -43,7 +43,7 @@ pipeline {
       steps {
         script {
           bat java -version
-          }
+         
           echo 'Stage 2'
         }
       }
