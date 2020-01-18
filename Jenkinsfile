@@ -45,7 +45,7 @@ pipeline {
       steps {
         script {
           bat 'mvn clean install'
-            bat 'aws s3 ls'
+          //  bat 'aws s3 ls'
          
           echo 'Stage 2'
         }
