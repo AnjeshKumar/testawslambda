@@ -5,6 +5,7 @@ def emailNotifications = 'anjesh.kumar@wipro.com'
 def notificationSent    = false
 def workspace = env.WORKSPACE
 
+
 pipeline {
     //Default agent label to run all stages
     agent { label 'master'}
@@ -48,6 +49,19 @@ pipeline {
           //  bat 'aws s3 ls'
          
           echo 'Stage 2'
+        }
+      }
+    }
+      
+     stage('Connect AWS') {
+      steps {
+        script {
+            withAWS(region:'us-east-1',credentials:'AWS_Credentials') {
+              bat 'aws s3 ls'
+            }
+        
+         
+          echo 'Stage 3'
         }
       }
     }
