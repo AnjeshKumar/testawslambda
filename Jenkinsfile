@@ -59,7 +59,7 @@ pipeline {
            VERSION = readMavenPom().getVersion()
            echo "ARTIFACTID: ${ARTIFACTID}"
            echo "VERSION: ${VERSION}"
-           JARNAME = ${ARTIFACTID}+'.'+${VERSION}+'.jar'
+           JARNAME = ARTIFACTID+'.'+VERSION+'.jar'
            echo "JARNAME: ${JARNAME}"
           echo 'Stage 2'
            
