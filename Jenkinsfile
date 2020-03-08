@@ -57,9 +57,9 @@ pipeline {
        script {
            ARTIFACTID = readMavenPom().getArtifactId()
            VERSION = readMavenPom().getVersion()
-           echo "IMAGE: ${IMAGE}"
+           echo "ARTIFACTID: ${ARTIFACTID}"
            echo "VERSION: ${VERSION}"
-           JARNAME = "${IMAGE}+'.'+${VERSION}+".jar"
+           JARNAME = ${ARTIFACTID}+'.'+${VERSION}+'.jar'
            echo "JARNAME: ${JARNAME}"
           echo 'Stage 2'
            
