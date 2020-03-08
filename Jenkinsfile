@@ -61,8 +61,9 @@ pipeline {
            echo "VERSION: ${VERSION}"
            JARNAME = ARTIFACTID+'.'+VERSION+'.jar'
            echo "JARNAME: ${JARNAME}"
-            echo "workspace: ${workspace}"
-           
+            echo "workspace: ${env.WORKSPACE}"
+           DIR = pwd();
+            echo "DIR: ${DIR}"
            
           echo 'Stage 2'
            
