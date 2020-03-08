@@ -46,7 +46,7 @@ pipeline {
     stage('Build Lamba') {
       steps {
         script {
-          //bat 'mvn clean install'        
+          bat 'mvn clean'        
         
         }
       }
