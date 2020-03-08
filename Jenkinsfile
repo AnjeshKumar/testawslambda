@@ -46,7 +46,7 @@ pipeline {
     stage('Build Lamba') {
       steps {
         script {
-          bat 'mvn clean install'        
+          //bat 'mvn clean install'        
         
         }
       }
@@ -59,7 +59,7 @@ pipeline {
            VERSION = readMavenPom().getVersion()
            echo "IMAGE: ${IMAGE}"
            echo "VERSION: ${VERSION}"
-           JARNAME = ${IMAGE}+'.'+VERSION
+           JARNAME = "${IMAGE}+'.'+${VERSION}+".jar"
            echo "JARNAME: ${JARNAME}"
           echo 'Stage 2'
            
