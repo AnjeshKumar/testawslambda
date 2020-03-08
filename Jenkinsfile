@@ -46,7 +46,7 @@ pipeline {
     stage('Build Lamba') {
       steps {
         script {
-          bat 'mvn clean'        
+          bat 'mvn clean install'        
         
         }
       }
@@ -65,6 +65,7 @@ pipeline {
            
           withAWS(region:'us-east-1',credentials:'AWS_Credentials') {
            bat 'aws s3 ls'
+           bat 'aws s3 cp /../target/com.aws.hellolambda.example-1.0.0.jar s3://awslambdadev/'
          }
                 
           echo 'Stage 3'
