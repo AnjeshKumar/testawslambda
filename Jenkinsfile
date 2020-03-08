@@ -61,6 +61,9 @@ pipeline {
            echo "VERSION: ${VERSION}"
            JARNAME = ARTIFACTID+'.'+VERSION+'.jar'
            echo "JARNAME: ${JARNAME}"
+            echo "workspace: ${workspace}"
+           
+           
           echo 'Stage 2'
            
           withAWS(region:'us-east-1',credentials:'AWS_Credentials') {
