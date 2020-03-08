@@ -4,6 +4,7 @@ def RELEASE_BRANCH_NAME = "master"
 def emailNotifications = 'anjesh.kumar@wipro.com'
 def notificationSent    = false
 def workspace = env.WORKSPACE
+def bucket = 'awslambdadev'
 
 
 pipeline {
@@ -45,12 +46,8 @@ pipeline {
     stage('Build Lamba') {
       steps {
         script {
-          bat 'mvn clean install'         
-         IMAGE = readMavenPom().getArtifactId()
-        VERSION = readMavenPom().getVersion()
-         echo "IMAGE: ${IMAGE}"
-        echo "VERSION: ${VERSION}"
-          echo 'Stage 2'
+          bat 'mvn clean install'        
+        
         }
       }
     }
@@ -58,6 +55,14 @@ pipeline {
    stage('Connect AWS') {
      steps {
        script {
+           ARTIFACTID = readMavenPom().getArtifactId()
+           VERSION = readMavenPom().getVersion()
+           echo "IMAGE: ${IMAGE}"
+           echo "VERSION: ${VERSION}"
+           JARNAME = ${IMAGE}+'.'+VERSION
+           echo "JARNAME: ${JARNAME}"
+          echo 'Stage 2'
+           
           withAWS(region:'us-east-1',credentials:'AWS_Credentials') {
            bat 'aws s3 ls'
          }
