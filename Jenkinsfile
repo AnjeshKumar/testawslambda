@@ -52,10 +52,10 @@ pipeline {
       }
     }
       
-   stage('Connect AWS') {
-     steps {
-       script {
-           ARTIFACTID = readMavenPom().getArtifactId()
+    stage('Push') {
+      steps {
+        script {
+          ARTIFACTID = readMavenPom().getArtifactId()
            VERSION = readMavenPom().getVersion()
            echo "ARTIFACTID: ${ARTIFACTID}"
            echo "VERSION: ${VERSION}"
@@ -68,11 +68,31 @@ pipeline {
           echo 'Stage 2'
            
           withAWS(region:'us-east-1',credentials:'AWS_Credentials') {
-           bat 'aws s3 ls'
-           bat 'aws s3 cp "C:/Program Files (x86)/Jenkins/workspace/mul_master/target/com.aws.hellolambda.example-1.0.0.jar" s3://awslambdadev/ --sse AES256'
+           bat 'aws s3 ls'          
+           bat 'aws s3api put-object --bucket anjeshlambdatest --key ${env.WORKSPACE}/target/com.aws.hellolambda.example-1.0.0.jar --body com.aws.hellolambda.example-1.0.0.jar
          }
                 
-          echo 'Stage 3'
+          echo 'Stage 3'      
+        
+        }
+      }
+    }
+      
+   stage('Integration Test') {
+     steps {
+       script {
+           ARTIFACTID = readMavenPom().getArtifactId()
+           VERSION = readMavenPom().getVersion()
+          
+        }
+      }
+    }
+      
+      stage('Deploy') {
+      steps {
+        script {
+               
+        echo 'Stage 3'  
         }
       }
     }
