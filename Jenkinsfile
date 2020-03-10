@@ -69,7 +69,7 @@ pipeline {
            
           withAWS(region:'us-east-1',credentials:'AWS_Credentials') {
            bat 'aws s3 ls'          
-           bat 'aws s3api put-object --bucket anjeshlambdatest --key ${env.WORKSPACE}/target/com.aws.hellolambda.example-1.0.0.jar --body com.aws.hellolambda.example-1.0.0.jar
+           bat 'aws s3api put-object --bucket anjeshlambdatest --key "${env.WORKSPACE}/target/com.aws.hellolambda.example-1.0.0.jar" --body com.aws.hellolambda.example-1.0.0.jar'
          }
                 
           echo 'Stage 3'      
