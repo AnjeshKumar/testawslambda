@@ -60,16 +60,16 @@ pipeline {
            echo "ARTIFACTID: ${ARTIFACTID}"
            echo "VERSION: ${VERSION}"
            JARNAME = ARTIFACTID+'.'+VERSION+'.jar'
-           echo 'JARNAME: ${JARNAME}'
-            echo "workspace: ${env.WORKSPACE}"
+           echo "JARNAME: ${JARNAME}"
+            echo" workspace: ${env.WORKSPACE}"
            DIR = pwd();
             echo "DIR: ${DIR}"
            
           echo 'Stage 2 : ${env.WORKSPACE}'
            
           withAWS(region:'us-east-1',credentials:'AWS_Credentials') {
-           bat 'aws s3 ls'          
-           bat 'aws s3api put-object --bucket anjeshlambdatest --key com.aws.hellolambda.example-1.0.0.jar --body ${env.WORKSPACE}/target/com.aws.hellolambda.example-1.0.0.jar'
+           bat "aws s3 ls"       
+           bat "aws s3api put-object --bucket anjeshlambdatest --key com.aws.hellolambda.example-1.0.0.jar --body ${env.WORKSPACE}/target/com.aws.hellolambda.example-1.0.0.jar"
          }
                 
           echo 'Stage 3'      
