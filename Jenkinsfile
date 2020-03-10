@@ -60,7 +60,7 @@ pipeline {
            echo "ARTIFACTID: ${ARTIFACTID}"
            echo "VERSION: ${VERSION}"
            JARNAME = ARTIFACTID+'.'+VERSION+'.jar'
-           echo 'JARNAME: ${JARNAME}/
+           echo 'JARNAME: ${JARNAME}'
             echo "workspace: ${env.WORKSPACE}"
            DIR = pwd();
             echo "DIR: ${DIR}"
