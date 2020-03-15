@@ -84,6 +84,13 @@ pipeline {
        script {
            ARTIFACTID = readMavenPom().getArtifactId()
            VERSION = readMavenPom().getVersion()
+            label =    does_lambda_exist()  
+            echo "Stage 3 : ${label}"
+           if( label == 'true' ) {
+                echo "Stage 2 Yes"
+            }  else{
+               echo "Stage 2 No"
+            }
           
         }
       }
@@ -103,7 +110,7 @@ pipeline {
 
 def does_lambda_exist() {	
   isexist='true'
-  bat  'aws lambda get-function --function-name awslambdausingcli > /dev/null 2>&1'
+ // bat  'aws lambda get-function --function-name awslambdausingcli > /dev/null 2>&1'
    
   return isexist
 }
