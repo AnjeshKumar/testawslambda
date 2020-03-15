@@ -91,7 +91,7 @@ pipeline {
                    echo "Stage 2 Yes"
                    // sh "aws lambda delete-function --function-name awslambdausingcli"
                  bat 'aws lambda update-function-code --function-name awslambdausingcli --s3-bucket anjeshlambdatest --s3-key com.aws.hellolambda.example-1.0.0.jar'
-               // bat 'aws lambda invoke --function-name awslambdausingcli --payload "{""name"": ""anjesh""}" outputfile.txt'
+                bat 'aws lambda invoke --function-name awslambdausingcli --payload "{""name"": ""anjesh""}" outputfile.txt'
                }
             }  else{
                echo "Stage 2 No"
