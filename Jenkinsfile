@@ -86,11 +86,11 @@ pipeline {
            VERSION = readMavenPom().getVersion()
             label =    does_lambda_exist()  
             echo "Stage 3 : ${label}"
-           if( label == 'true' ) {
-                echo "Stage 2 Yes"
+           if( label == 'true' ) {                
                withAWS(region:'us-east-1',credentials:'AWS_Credentials') {
+                   echo "Stage 2 Yes"
                    // sh "aws lambda delete-function --function-name awslambdausingcli"
-                  sh 'aws lambda update-function-code --function-name awslambdausingcli --s3-bucket anjeshlambdatest --s3-key com.aws.hellolambda.example-1.0.0.jar'
+                //  sh 'aws lambda update-function-code --function-name awslambdausingcli --s3-bucket anjeshlambdatest --s3-key com.aws.hellolambda.example-1.0.0.jar'
                 //  sh 'aws lambda invoke --function-name awslambdausingcli --payload "{""name"": ""anjesh""}" outputfile.txt'
                }
             }  else{
