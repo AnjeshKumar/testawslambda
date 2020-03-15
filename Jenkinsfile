@@ -73,7 +73,7 @@ pipeline {
           // bat "aws s3api put-object --bucket anjeshlambdatest --key com.aws.hellolambda.example-1.0.0.jar --body '${env.WORKSPACE}/target/com.aws.hellolambda.example-1.0.0.jar'"
          }
                 
-          echo 'Stage 3 : getLabel()'      
+          echo 'Stage 3'      
         
         }
       }
@@ -103,6 +103,4 @@ pipeline {
   }
 }
 
-def getLabel(){
-    return 'docker'
-}
+
