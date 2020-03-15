@@ -90,8 +90,7 @@ pipeline {
                 echo "Stage 2 Yes"
                withAWS(region:'us-east-1',credentials:'AWS_Credentials') {
                    // sh "aws lambda delete-function --function-name awslambdausingcli"
-                  sh "aws lambda update-function-code --function-name 'awslambdausingcli'
-                    --s3-bucket 'awslambdadev' --s3-key 'com.aws.hellolambda.example-1.0.0.jar'
+                  sh "aws lambda update-function-code --function-name 'awslambdausingcli' --s3-bucket 'awslambdadev' --s3-key 'com.aws.hellolambda.example-1.0.0.jar'"
                   sh "aws lambda invoke --function-name 'awslambdausingcli' --payload '{''name'': ''anjesh''}' outputfile.txt"
                }
             }  else{
