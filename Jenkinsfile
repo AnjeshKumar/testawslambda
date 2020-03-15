@@ -99,8 +99,10 @@ pipeline {
     }
 
   }
-    
-    def getLabel(){
-    return 'docker'
+   
+  }
 }
+
+def getLabel(){
+    return 'docker'
 }
