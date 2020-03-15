@@ -5,6 +5,7 @@ def emailNotifications = 'anjesh.kumar@wipro.com'
 def notificationSent    = false
 def workspace = env.WORKSPACE
 def bucket = 'awslambdadev'
+def FUNCTION_NAME = 'awslambdausingcli'
 
 
 pipeline {
@@ -69,10 +70,10 @@ pipeline {
            
           withAWS(region:'us-east-1',credentials:'AWS_Credentials') {
            bat "aws s3 ls"       
-           bat "aws s3api put-object --bucket anjeshlambdatest --key com.aws.hellolambda.example-1.0.0.jar --body '${env.WORKSPACE}/target/com.aws.hellolambda.example-1.0.0.jar'"
+          // bat "aws s3api put-object --bucket anjeshlambdatest --key com.aws.hellolambda.example-1.0.0.jar --body '${env.WORKSPACE}/target/com.aws.hellolambda.example-1.0.0.jar'"
          }
                 
-          echo 'Stage 3'      
+          echo 'Stage 3 : getLabel()'      
         
         }
       }
@@ -98,4 +99,8 @@ pipeline {
     }
 
   }
+    
+    def getLabel(){
+    return 'docker'
+}
 }
