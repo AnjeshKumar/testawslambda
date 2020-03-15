@@ -104,12 +104,6 @@ pipeline {
 def does_lambda_exist() {	
   isexist='true'
   bat  'aws lambda get-function --function-name awslambdausingcli > /dev/null 2>&1'
-  bat "if [ 0 -eq $? ]; then
-    echo 'Lambda  exists'
-    isexist='true'
-  else
-    echo 'Lambda  does not exist'
-    isexist='false'
-  fi " 
+   
   return isexist
 }
