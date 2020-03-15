@@ -92,8 +92,8 @@ pipeline {
       stage('Deploy') {
       steps {
         script {
-               
-        echo 'Stage 3 : getLabel()'  
+        label =    getLabel()  
+            echo "Stage 3 : ${label}"
         }
       }
     }
