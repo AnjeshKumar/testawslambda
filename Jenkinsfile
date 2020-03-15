@@ -92,7 +92,7 @@ pipeline {
       stage('Deploy') {
       steps {
         script {
-        label =    getLabel()  
+        label =    does_lambda_exist()  
             echo "Stage 3 : ${label}"
         }
       }
