@@ -109,7 +109,7 @@ pipeline {
 } // Pipeline
 
 def does_lambda_exist() {	
-  isexist='true'
+  isexist='false'
  // bat  'aws lambda get-function --function-name awslambdausingcli > /dev/null 2>&1'
    
   return isexist
