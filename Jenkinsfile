@@ -93,7 +93,7 @@ pipeline {
       steps {
         script {
                
-        echo 'Stage 3'  
+        echo 'Stage 3 : getLabel()'  
         }
       }
     }
@@ -101,4 +101,6 @@ pipeline {
   } // Stages
 } // Pipeline
 
-
+def getLabel(){
+    return 'docker'
+}
